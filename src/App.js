@@ -8,6 +8,50 @@ const PHOTO_URL = photoId => `https://picsum.photos/id/${photoId}/250/200`;
 // about various photos.
 const PHOTO_LIST_URL = "https://picsum.photos/list";
 
+const App = () => {
+  const [photos, setPhotos] = useState([])
+
+  useEffect(() => {
+    fetch("https://picsum.photos/list")
+      .then(response => response.json())
+      .then(response => {
+        setPhotos(response)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [])
+
+  const handleChange = (changePhotos) => {
+    setPhotos(changePhotos)
+    console.log(changePhotos)
+  }
+  return (
+    <>
+      <header>
+        <h1>Photo Wall</h1>
+        <p>
+
+        </p>
+      </header>
+      <div className="cclassollage">
+        {/* We use map here because Array.prototype.map is an expression,
+            * and for loops are not. You'll learn more about this soon!
+            */}
+        {photos.map(photo => (
+          <img
+            alt={PHOTO_LIST_URL.filename}
+            key={Math.random()}
+            src={PHOTO_URL(photo.id)}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
+export default App
+
 
 
 // class App extends Component {
@@ -67,49 +111,4 @@ const PHOTO_LIST_URL = "https://picsum.photos/list";
 // }
 
 // export default App;
-
-
-const App = () => {
-  const [photos, setPhotos] = useState([])
-
-  useEffect(() => {
-    fetch("https://picsum.photos/list")
-      .then(response => response.json())
-      .then(response => {
-        setPhotos(response)
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [])
-
-  const handleChange = (changePhotos) => {
-    setPhotos(changePhotos)
-    console.log(changePhotos)
-  }
-  return (
-    <>
-      <header>
-        <h1>Photo Wall</h1>
-        <p>
-
-        </p>
-      </header>
-      <div className="cclassollage">
-        {/* We use map here because Array.prototype.map is an expression,
-            * and for loops are not. You'll learn more about this soon!
-            */}
-        {photos.map(photo => (
-          <img
-            alt={PHOTO_LIST_URL.filename}
-            key={Math.random()}
-            src={PHOTO_URL(photo.id)}
-          />
-        ))}
-      </div>
-    </>
-  );
-}
-
-export default App
 
